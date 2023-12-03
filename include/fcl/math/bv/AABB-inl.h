@@ -222,7 +222,7 @@ S AABB<S>::size() const
 template <typename S>
 S AABB<S>::radius() const
 {
-  return (max_ - min_).norm() / 2;
+  return (max_ - min_).norm() / 2.0;
 }
 
 //==============================================================================
@@ -318,8 +318,8 @@ S AABB<S>::distance(const AABB<S>& other) const
 template <typename S>
 bool AABB<S>::equal(const AABB<S>& other) const
 {
-  return min_.isApprox(other.min_, std::numeric_limits<S>::epsilon() * 100)
-      && max_.isApprox(other.max_, std::numeric_limits<S>::epsilon() * 100);
+  return min_.isApprox(other.min_, std::numeric_limits<S>::epsilon() * 100.0)
+      && max_.isApprox(other.max_, std::numeric_limits<S>::epsilon() * 100.0);
 }
 
 //==============================================================================

@@ -172,7 +172,7 @@ struct CanStopImpl
       const MeshConservativeAdvancementTraversalNode<BV>& node, S c)
   {
     if((c >= node.w * (node.min_distance - node.abs_err))
-       && (c * (1 + node.rel_err) >= node.w * node.min_distance))
+       && (c * (1.0 + node.rel_err) >= node.w * node.min_distance))
     {
       const ConservativeAdvancementStackData<S>& data = node.stack.back();
       S d = data.d;

@@ -101,7 +101,7 @@ void ShapeMeshDistanceTraversalNode<Shape, BV, NarrowPhaseSolver>::leafTesting(i
 template <typename Shape, typename BV, typename NarrowPhaseSolver>
 bool ShapeMeshDistanceTraversalNode<Shape, BV, NarrowPhaseSolver>::canStop(S c) const
 {
-  if((c >= this->result->min_distance - abs_err) && (c * (1 + rel_err) >= this->result->min_distance))
+  if((c >= this->result->min_distance - abs_err) && (c * (1.0 + rel_err) >= this->result->min_distance))
     return true;
   return false;
 }

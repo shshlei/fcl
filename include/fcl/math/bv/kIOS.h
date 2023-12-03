@@ -117,7 +117,7 @@ public:
       Vector3<S>* P = nullptr, Vector3<S>* Q = nullptr) const;
 
   static constexpr S ratio() { return 1.5; }
-  static constexpr S invSinA() { return 2; }
+  static constexpr S invSinA() { return 2.0; }
   static S cosA() { return std::sqrt(3.0) / 2.0; }
 };
 

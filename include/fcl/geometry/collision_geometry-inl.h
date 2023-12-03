@@ -134,7 +134,7 @@ Matrix3<S> CollisionGeometry<S>::computeMomentofInertia() const
 template <typename S>
 S CollisionGeometry<S>::computeVolume() const
 {
-  return 0;
+  return 0.0;
 }
 
 //==============================================================================

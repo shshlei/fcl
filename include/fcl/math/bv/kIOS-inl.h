@@ -64,10 +64,10 @@ typename kIOS<S>::kIOS_Sphere kIOS<S>::encloseSphere(
   }
   else /** spheres partially overlapping or disjoint */
   {
-    float dist = std::sqrt(dist2);
+    S dist = std::sqrt(dist2);
     kIOS_Sphere s;
     s.r = dist + s0.r + s1.r;
-    if(dist > 0)
+    if(dist > 0.0)
       s.o = s0.o + d * ((s.r - s0.r) / dist);
     else
       s.o = s0.o;

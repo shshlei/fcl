@@ -60,7 +60,7 @@ public:
   Ellipsoid(const Vector3<S>& radii);
 
   /// @brief Radii of the ellipsoid
-  Vector3<S> radii;
+  Vector3<S> radii, radii2;
 
   /// @brief Compute AABB
   void computeLocalAABB() override;
@@ -77,6 +77,8 @@ public:
   /// @brief get the vertices of some convex shape which can bound this shape in
   /// a specific configuration
   std::vector<Vector3<S>> getBoundVertices(const Transform3<S>& tf) const;
+
+  virtual Vector3<S> localGetSupportingVertex(const Vector3<S>& vec) const override;
 
   friend
   std::ostream& operator<<(std::ostream& out, const Ellipsoid& ellipsoid) {

@@ -33,59 +33,18 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @author Jia Pan */
+/** @author Shi Shenglei */
 
-#ifndef FCL_SHAPE_SPHERE_H
-#define FCL_SHAPE_SPHERE_H
-
-#include "fcl/geometry/shape/shape_base.h"
-
-#include <iostream>
+#include "fcl/narrowphase/detail/bisection_solver-inl.h"
 
 namespace fcl
 {
 
-/// @brief Center at zero point sphere
-template <typename S_>
-class FCL_EXPORT Sphere : public ShapeBase<S_>
+namespace detail
 {
-public:
 
-  using S = S_;
+template
+struct BisectionSolver<double>;
 
-  Sphere(S radius);
-
-  /// @brief Radius of the sphere
-  S radius;
-
-  /// @brief Compute AABB<S>
-  void computeLocalAABB() override;
-
-  /// @brief Get node type: a sphere
-  NODE_TYPE getNodeType() const override;
-
-  Matrix3<S> computeMomentofInertia() const override;
-
-  S computeVolume() const override;
-
-  /// @brief get the vertices of some convex shape which can bound this shape in
-  /// a specific configuration
-  std::vector<Vector3<S>> getBoundVertices(const Transform3<S>& tf) const;
-
-  virtual Vector3<S> localGetSupportingVertex(const Vector3<S>& vec) const override;
-
-  friend
-  std::ostream& operator<<(std::ostream& out, const Sphere& sphere) {
-    out << "Sphere(" << sphere.radius << ")";
-    return out;
-  }
-};
-
-using Spheref = Sphere<float>;
-using Sphered = Sphere<double>;
-
+} // namespace detail
 } // namespace fcl
-
-#include "fcl/geometry/shape/sphere-inl.h"
-
-#endif

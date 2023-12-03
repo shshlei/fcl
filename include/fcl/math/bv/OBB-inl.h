@@ -163,7 +163,7 @@ OBB<S> OBB<S>::operator +(const OBB<S>& other) const
   Vector3<S> center_diff = To - other.To;
   S max_extent = std::max(std::max(extent[0], extent[1]), extent[2]);
   S max_extent2 = std::max(std::max(other.extent[0], other.extent[1]), other.extent[2]);
-  if(center_diff.norm() > 2 * (max_extent + max_extent2))
+  if(center_diff.norm() > 2.0 * (max_extent + max_extent2))
   {
     return merge_largedist(*this, other);
   }
@@ -177,21 +177,21 @@ OBB<S> OBB<S>::operator +(const OBB<S>& other) const
 template <typename S>
 S OBB<S>::width() const
 {
-  return 2 * extent[0];
+  return 2.0 * extent[0];
 }
 
 //==============================================================================
 template <typename S>
 S OBB<S>::height() const
 {
-  return 2 * extent[1];
+  return 2.0 * extent[1];
 }
 
 //==============================================================================
 template <typename S>
 S OBB<S>::depth() const
 {
-  return 2 * extent[2];
+  return 2.0 * extent[2];
 }
 
 //==============================================================================
@@ -258,7 +258,7 @@ OBB<S> merge_largedist(const OBB<S>& b1, const OBB<S>& b2)
   computeVertices(b2, vertex + 8);
   Matrix3<S> M;
   Matrix3<S> E;
-  Vector3<S> s(0, 0, 0);
+  Vector3<S> s(0.0, 0.0, 0.0);
 
   OBB<S> b;
   b.axis.col(0) = b1.To - b2.To;

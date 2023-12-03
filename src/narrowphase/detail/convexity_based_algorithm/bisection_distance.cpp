@@ -5,7 +5,7 @@
  *  Copyright (c) 2014-2016, Open Source Robotics Foundation
  *  All rights reserved.
  *
- *  Redistribution and use in source and binary forms, with or without
+ *  Redistribution and use in source and binary formdouble, with or without
  *  modification, are permitted provided that the following conditions
  *  are met:
  *
@@ -20,7 +20,7 @@
  *     from this software without specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIEdouble, INCLUDING, BUT NOT
  *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
  *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
  *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
@@ -33,59 +33,31 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @author Jia Pan */
+/** @author Shi Shenglei */
 
-#ifndef FCL_SHAPE_SPHERE_H
-#define FCL_SHAPE_SPHERE_H
-
-#include "fcl/geometry/shape/shape_base.h"
-
-#include <iostream>
+#include "fcl/narrowphase/detail/convexity_based_algorithm/bisection_distance-inl.h"
 
 namespace fcl
 {
 
-/// @brief Center at zero point sphere
-template <typename S_>
-class FCL_EXPORT Sphere : public ShapeBase<S_>
+namespace detail
 {
-public:
 
-  using S = S_;
+//==============================================================================
+template
+bool GJKCollide(const MinkowskiDiffd & shape, unsigned int max_iterations, double tolerance,
+    Vector3d* contact_points, double* penetration_depth, Vector3d* normal);
 
-  Sphere(S radius);
 
-  /// @brief Radius of the sphere
-  S radius;
+//==============================================================================
+template
+bool SeparationDistance(const MinkowskiDiffd& shape, unsigned int max_iterations, double tolerance,
+                 double* dist, Vector3d* p1, Vector3d* p2);
 
-  /// @brief Compute AABB<S>
-  void computeLocalAABB() override;
+//==============================================================================
+template
+bool SignedDistance(const MinkowskiDiffd& shape, unsigned int max_iterations, double tolerance,
+                 double* dist, Vector3d* p1, Vector3d* p2);
 
-  /// @brief Get node type: a sphere
-  NODE_TYPE getNodeType() const override;
-
-  Matrix3<S> computeMomentofInertia() const override;
-
-  S computeVolume() const override;
-
-  /// @brief get the vertices of some convex shape which can bound this shape in
-  /// a specific configuration
-  std::vector<Vector3<S>> getBoundVertices(const Transform3<S>& tf) const;
-
-  virtual Vector3<S> localGetSupportingVertex(const Vector3<S>& vec) const override;
-
-  friend
-  std::ostream& operator<<(std::ostream& out, const Sphere& sphere) {
-    out << "Sphere(" << sphere.radius << ")";
-    return out;
-  }
-};
-
-using Spheref = Sphere<float>;
-using Sphered = Sphere<double>;
-
+} // namespace detail
 } // namespace fcl
-
-#include "fcl/geometry/shape/sphere-inl.h"
-
-#endif

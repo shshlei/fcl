@@ -137,27 +137,27 @@ bool RSS<S>::contain(const Vector3<S>& p) const
   S abs_proj2 = fabs(proj[2]);
 
   /// projection is within the rectangle
-  if((proj[0] < l[0]) && (proj[0] > 0) && (proj[1] < l[1]) && (proj[1] > 0))
+  if((proj[0] < l[0]) && (proj[0] > 0.0) && (proj[1] < l[1]) && (proj[1] > 0.0))
   {
     return (abs_proj2 < r);
   }
-  else if((proj[0] < l[0]) && (proj[0] > 0) && ((proj[1] < 0) || (proj[1] > l[1])))
+  else if((proj[0] < l[0]) && (proj[0] > 0.0) && ((proj[1] < 0.0) || (proj[1] > l[1])))
   {
-    S y = (proj[1] > 0) ? l[1] : 0;
-    Vector3<S> v(proj[0], y, 0);
+    S y = (proj[1] > 0.0) ? l[1] : 0.0;
+    Vector3<S> v(proj[0], y, 0.0);
     return ((proj - v).squaredNorm() < r * r);
   }
-  else if((proj[1] < l[1]) && (proj[1] > 0) && ((proj[0] < 0) || (proj[0] > l[0])))
+  else if((proj[1] < l[1]) && (proj[1] > 0.0) && ((proj[0] < 0.0) || (proj[0] > l[0])))
   {
-    S x = (proj[0] > 0) ? l[0] : 0;
-    Vector3<S> v(x, proj[1], 0);
+    S x = (proj[0] > 0.0) ? l[0] : 0.0;
+    Vector3<S> v(x, proj[1], 0.0);
     return ((proj - v).squaredNorm() < r * r);
   }
   else
   {
-    S x = (proj[0] > 0) ? l[0] : 0;
-    S y = (proj[1] > 0) ? l[1] : 0;
-    Vector3<S> v(x, y, 0);
+    S x = (proj[0] > 0.0) ? l[0] : 0.0;
+    S y = (proj[1] > 0.0) ? l[1] : 0.0;
+    Vector3<S> v(x, y, 0.0);
     return ((proj - v).squaredNorm() < r * r);
   }
 }
@@ -175,7 +175,7 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
   S abs_proj2 = fabs(proj[2]);
 
   // projection is within the rectangle
-  if((proj[0] < l[0]) && (proj[0] > 0) && (proj[1] < l[1]) && (proj[1] > 0))
+  if((proj[0] < l[0]) && (proj[0] > 0.0) && (proj[1] < l[1]) && (proj[1] > 0.0))
   {
     if(abs_proj2 < r)
       ; // do nothing
@@ -183,16 +183,16 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
     {
       r = 0.5 * (r + abs_proj2); // enlarge the r
       // change RSS origin position
-      if(proj[2] > 0)
+      if(proj[2] > 0.0)
         To[2] += 0.5 * (abs_proj2 - r);
       else
         To[2] -= 0.5 * (abs_proj2 - r);
     }
   }
-  else if((proj[0] < l[0]) && (proj[0] > 0) && ((proj[1] < 0) || (proj[1] > l[1])))
+  else if((proj[0] < l[0]) && (proj[0] > 0.0) && ((proj[1] < 0.0) || (proj[1] > l[1])))
   {
-    S y = (proj[1] > 0) ? l[1] : 0;
-    Vector3<S> v(proj[0], y, 0);
+    S y = (proj[1] > 0) ? l[1] : 0.0;
+    Vector3<S> v(proj[0], y, 0.0);
     S new_r_sqr = (proj - v).squaredNorm();
     if(new_r_sqr < r * r)
       ; // do nothing
@@ -202,27 +202,27 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
       {
         S delta_y = - std::sqrt(r * r - proj[2] * proj[2]) + fabs(proj[1] - y);
         l[1] += delta_y;
-        if(proj[1] < 0)
+        if(proj[1] < 0.0)
           To[1] -= delta_y;
       }
       else
       {
         S delta_y = fabs(proj[1] - y);
         l[1] += delta_y;
-        if(proj[1] < 0)
+        if(proj[1] < 0.0)
           To[1] -= delta_y;
 
-        if(proj[2] > 0)
+        if(proj[2] > 0.0)
           To[2] += 0.5 * (abs_proj2 - r);
         else
           To[2] -= 0.5 * (abs_proj2 - r);
       }
     }
   }
-  else if((proj[1] < l[1]) && (proj[1] > 0) && ((proj[0] < 0) || (proj[0] > l[0])))
+  else if((proj[1] < l[1]) && (proj[1] > 0.0) && ((proj[0] < 0.0) || (proj[0] > l[0])))
   {
-    S x = (proj[0] > 0) ? l[0] : 0;
-    Vector3<S> v(x, proj[1], 0);
+    S x = (proj[0] > 0.0) ? l[0] : 0.0;
+    Vector3<S> v(x, proj[1], 0.0);
     S new_r_sqr = (proj - v).squaredNorm();
     if(new_r_sqr < r * r)
       ; // do nothing
@@ -232,17 +232,17 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
       {
         S delta_x = - std::sqrt(r * r - proj[2] * proj[2]) + fabs(proj[0] - x);
         l[0] += delta_x;
-        if(proj[0] < 0)
+        if(proj[0] < 0.0)
           To[0] -= delta_x;
       }
       else
       {
         S delta_x = fabs(proj[0] - x);
         l[0] += delta_x;
-        if(proj[0] < 0)
+        if(proj[0] < 0.0)
           To[0] -= delta_x;
 
-        if(proj[2] > 0)
+        if(proj[2] > 0.0)
           To[2] += 0.5 * (abs_proj2 - r);
         else
           To[2] -= 0.5 * (abs_proj2 - r);
@@ -251,9 +251,9 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
   }
   else
   {
-    S x = (proj[0] > 0) ? l[0] : 0;
-    S y = (proj[1] > 0) ? l[1] : 0;
-    Vector3<S> v(x, y, 0);
+    S x = (proj[0] > 0.0) ? l[0] : 0.0;
+    S y = (proj[1] > 0.0) ? l[1] : 0.0;
+    Vector3<S> v(x, y, 0.0);
     S new_r_sqr = (proj - v).squaredNorm();
     if(new_r_sqr < r * r)
       ; // do nothing
@@ -269,7 +269,7 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
         l[0] += delta_x;
         l[1] += delta_y;
 
-        if(proj[0] < 0 && proj[1] < 0)
+        if(proj[0] < 0.0 && proj[1] < 0.0)
         {
           To[0] -= delta_x;
           To[1] -= delta_y;
@@ -283,13 +283,13 @@ RSS<S>& RSS<S>::operator +=(const Vector3<S>& p)
         l[0] += delta_x;
         l[1] += delta_y;
 
-        if(proj[0] < 0 && proj[1] < 0)
+        if(proj[0] < 0.0 && proj[1] < 0.0)
         {
           To[0] -= delta_x;
           To[1] -= delta_y;
         }
 
-        if(proj[2] > 0)
+        if(proj[2] > 0.0)
           To[2] += 0.5 * (abs_proj2 - r);
         else
           To[2] -= 0.5 * (abs_proj2 - r);

@@ -113,8 +113,11 @@ void NaiveCollisionManager<S>::collide(CollisionObject<S>* obj, void* cdata, Col
 
   for(auto* obj2 : objs)
   {
-    if(callback(obj, obj2, cdata))
-      return;
+    if(obj->getAABB().overlap(obj2->getAABB()))
+    {
+      if(callback(obj, obj2, cdata))
+        return;
+    }
   }
 }
 

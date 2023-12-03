@@ -69,7 +69,7 @@ Plane<S>::Plane(S a, S b, S c, S d)
 
 //==============================================================================
 template <typename S>
-Plane<S>::Plane() : ShapeBase<S>(), n(1, 0, 0), d(0)
+Plane<S>::Plane() : ShapeBase<S>(), n(1.0, 0.0, 0.0), d(0.0)
 {
   // Do nothing
 }
@@ -97,25 +97,25 @@ void Plane<S>::computeLocalAABB()
   if(n[1] == (S)0.0 && n[2] == (S)0.0)
   {
     // normal aligned with x axis
-    if(n[0] < 0)
+    if(n[0] < 0.0)
       this->aabb_local.min_[0] = this->aabb_local.max_[0] = -d;
-    else if(n[0] > 0)
+    else if(n[0] > 0.0)
       this->aabb_local.min_[0] = this->aabb_local.max_[0] = d;
   }
   else if(n[0] == (S)0.0 && n[2] == (S)0.0)
   {
     // normal aligned with y axis
-    if(n[1] < 0)
+    if(n[1] < 0.0)
       this->aabb_local.min_[1] = this->aabb_local.max_[1] = -d;
-    else if(n[1] > 0)
+    else if(n[1] > 0.0)
       this->aabb_local.min_[1] = this->aabb_local.max_[1] = d;
   }
   else if(n[0] == (S)0.0 && n[1] == (S)0.0)
   {
     // normal aligned with z axis
-    if(n[2] < 0)
+    if(n[2] < 0.0)
       this->aabb_local.min_[2] = this->aabb_local.max_[2] = -d;
-    else if(n[2] > 0)
+    else if(n[2] > 0.0)
       this->aabb_local.min_[2] = this->aabb_local.max_[2] = d;
   }
 
@@ -135,7 +135,7 @@ template <typename S>
 void Plane<S>::unitNormalTest()
 {
   S l = n.norm();
-  if(l > 0)
+  if(l > 0.0)
   {
     S inv_l = 1.0 / l;
     n *= inv_l;
@@ -143,8 +143,8 @@ void Plane<S>::unitNormalTest()
   }
   else
   {
-    n << 1, 0, 0;
-    d = 0;
+    n << 1.0, 0.0, 0.0;
+    d = 0.0;
   }
 }
 

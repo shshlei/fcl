@@ -147,7 +147,7 @@ void MeshDistanceTraversalNode<BV>::leafTesting(int b1, int b2) const
 template <typename BV>
 bool MeshDistanceTraversalNode<BV>::canStop(typename BV::S c) const
 {
-  if((c >= this->result->min_distance - abs_err) && (c * (1 + rel_err) >= this->result->min_distance))
+  if((c >= this->result->min_distance - abs_err) && (c * (1.0 + rel_err) >= this->result->min_distance))
     return true;
   return false;
 }

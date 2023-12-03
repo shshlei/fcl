@@ -67,7 +67,7 @@ namespace fcl
 /// (-1,1,0) and (1,-1,0) -> indices 6 and 15
 /// (-1,0,1) and (1,0,-1) -> indices 7 and 16
 /// (0,-1,1) and (0,1,-1) -> indices 8 and 17
-/// For K = 18, the planes are 6 AABB planes and 18 diagonal planes that cut off some space of the edges:
+/// For K = 24, the planes are 6 AABB planes and 18 diagonal planes that cut off some space of the edges:
 /// (-1,0,0) and (1,0,0)  -> indices 0 and 12
 /// (0,-1,0) and (0,1,0)  -> indices 1 and 13
 /// (0,0,-1) and (0,0,1)  -> indices 2 and 14

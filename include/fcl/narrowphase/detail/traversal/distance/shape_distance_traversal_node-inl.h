@@ -62,7 +62,7 @@ template <typename Shape1, typename Shape2, typename NarrowPhaseSolver>
 typename Shape1::S
 ShapeDistanceTraversalNode<Shape1, Shape2, NarrowPhaseSolver>::BVTesting(int, int) const
 {
-  return -1; // should not be used
+  return -1.0; // should not be used
 }
 
 //==============================================================================

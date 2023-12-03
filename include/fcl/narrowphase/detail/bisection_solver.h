@@ -33,10 +33,10 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @author Jia Pan */
+/** @author Shi Shenglei */
 
-#ifndef FCL_NARROWPHASE_GJKSOLVERLIBCCD_H
-#define FCL_NARROWPHASE_GJKSOLVERLIBCCD_H
+#ifndef FCL_NARROWPHASE_BISECTIONSOLVER_H
+#define FCL_NARROWPHASE_BISECTIONSOLVER_H
 
 #include <iostream>
 
@@ -49,58 +49,11 @@ namespace fcl
 namespace detail
 {
 
-/// @brief collision and distance solver based on libccd library.
+/// @brief collision and distance solver.
 template <typename S_>
-struct FCL_EXPORT GJKSolver_libccd
+struct FCL_EXPORT BisectionSolver
 {
   using S = S_;
-
-  /// @brief intersection checking between two shapes
-  /// @deprecated use shapeIntersect(const Shape1&, const Transform3<S>&, const Shape2&, const Transform3<S>&, std::vector<ContactPoint<S>>*) const
-  template<typename Shape1, typename Shape2>
-  FCL_DEPRECATED
-  bool shapeIntersect(
-      const Shape1& s1,
-      const Transform3<S>& tf1,
-      const Shape2& s2,
-      const Transform3<S>& tf2,
-      Vector3<S>* contact_points,
-      S* penetration_depth,
-      Vector3<S>* normal) const;
-
-  /// @brief intersection checking between two shapes
-  template<typename Shape1, typename Shape2>
-  bool shapeIntersect(
-      const Shape1& s1,
-      const Transform3<S>& tf1,
-      const Shape2& s2,
-      const Transform3<S>& tf2,
-      std::vector<ContactPoint<S>>* contacts = nullptr) const;
-
-  /// @brief intersection checking between one shape and a triangle
-  template<typename Shape>
-  bool shapeTriangleIntersect(
-      const Shape& s,
-      const Transform3<S>& tf,
-      const Vector3<S>& P1,
-      const Vector3<S>& P2,
-      const Vector3<S>& P3,
-      Vector3<S>* contact_points = nullptr,
-      S* penetration_depth = nullptr,
-      Vector3<S>* normal = nullptr) const;
-
-  //// @brief intersection checking between one shape and a triangle with transformation
-  template<typename Shape>
-  bool shapeTriangleIntersect(
-      const Shape& s,
-      const Transform3<S>& tf1,
-      const Vector3<S>& P1,
-      const Vector3<S>& P2,
-      const Vector3<S>& P3,
-      const Transform3<S>& tf2,
-      Vector3<S>* contact_points = nullptr,
-      S* penetration_depth = nullptr,
-      Vector3<S>* normal = nullptr) const;
 
   /// @brief distance computation between two shapes
   template<typename Shape1, typename Shape2>
@@ -113,6 +66,16 @@ struct FCL_EXPORT GJKSolver_libccd
       Vector3<S>* p1 = nullptr,
       Vector3<S>* p2 = nullptr) const;
 
+  /// @brief distance computation between two shapes
+  template<typename Shape1, typename Shape2>
+  bool shapeDistanceCCD(
+      const Shape1& s1,
+      const Transform3<S>& tf1,
+      const Shape2& s2,
+      const Transform3<S>& tf2,
+      S* dist = nullptr,
+      Vector3<S>* p1 = nullptr,
+      Vector3<S>* p2 = nullptr) const;
 
   template<typename Shape1, typename Shape2>
   bool shapeSignedDistance(
@@ -150,7 +113,7 @@ struct FCL_EXPORT GJKSolver_libccd
       Vector3<S>* p2 = nullptr) const;
 
   /// @brief default setting for GJK algorithm
-  GJKSolver_libccd();
+  BisectionSolver();
 
   void enableCachedGuess(bool if_enable) const;
 
@@ -171,8 +134,8 @@ struct FCL_EXPORT GJKSolver_libccd
   S distance_tolerance;
 
   friend
-  std::ostream& operator<<(std::ostream& out, const GJKSolver_libccd& solver) {
-    out << "GjkSolver_libccd"
+  std::ostream& operator<<(std::ostream& out, const BisectionSolver& solver) {
+    out << "BisectionSolver"
         << "\n    collision_tolerance:      " << solver.collision_tolerance
         << "\n    max collision iterations: " << solver.max_collision_iterations
         << "\n    distance tolerance:       " << solver.distance_tolerance
@@ -183,12 +146,12 @@ struct FCL_EXPORT GJKSolver_libccd
 
 };
 
-using GJKSolver_libccdf = GJKSolver_libccd<float>;
-using GJKSolver_libccdd = GJKSolver_libccd<double>;
+using BisectionSolverf = BisectionSolver<float>;
+using BisectionSolverd = BisectionSolver<double>;
 
 } // namespace detail
 } // namespace fcl
 
-#include "fcl/narrowphase/detail/gjk_solver_libccd-inl.h"
+#include "fcl/narrowphase/detail/bisection_solver-inl.h"
 
 #endif

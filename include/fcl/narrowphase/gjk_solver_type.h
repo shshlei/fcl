@@ -42,7 +42,7 @@ namespace fcl
 {
 
 /// @brief Type of narrow phase GJK solver
-enum GJKSolverType {GST_LIBCCD, GST_INDEP};
+enum GJKSolverType {GST_LIBCCD, GST_INDEP, GST_BISECTION};
 
 } // namespace fcl
 

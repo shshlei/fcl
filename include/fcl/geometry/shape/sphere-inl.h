@@ -68,7 +68,8 @@ void Sphere<S>::computeLocalAABB()
 template <typename S>
 NODE_TYPE Sphere<S>::getNodeType() const
 {
-  return GEOM_SPHERE; }
+  return GEOM_SPHERE;
+}
 
 //==============================================================================
 template <typename S>
@@ -94,8 +95,8 @@ std::vector<Vector3<S>> Sphere<S>::getBoundVertices(
   // we use icosahedron to bound the sphere
 
   std::vector<Vector3<S>> result(12);
-  const auto m = (1 + std::sqrt(5.0)) / 2.0;
-  auto edge_size = radius * 6 / (std::sqrt(27.0) + std::sqrt(15.0));
+  const auto m = (1.0 + std::sqrt(5.0)) / 2.0;
+  auto edge_size = radius * 6.0 / (std::sqrt(27.0) + std::sqrt(15.0));
 
   auto a = edge_size;
   auto b = m * edge_size;
@@ -115,6 +116,11 @@ std::vector<Vector3<S>> Sphere<S>::getBoundVertices(
   return result;
 }
 
+template <typename S>
+Vector3<S> Sphere<S>::localGetSupportingVertex(const Vector3<S>& vec) const
+{
+  return radius * vec;
+}
 } // namespace fcl
 
 #endif

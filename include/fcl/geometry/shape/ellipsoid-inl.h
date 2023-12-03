@@ -50,7 +50,7 @@ class FCL_EXPORT Ellipsoid<double>;
 //==============================================================================
 template <typename S>
 Ellipsoid<S>::Ellipsoid(S a, S b, S c)
-  : ShapeBase<S>(), radii(a, b, c)
+  : ShapeBase<S>(), radii(a, b, c), radii2(a*a, b*b, c*c)
 {
   // Do nothing
 }
@@ -58,7 +58,7 @@ Ellipsoid<S>::Ellipsoid(S a, S b, S c)
 //==============================================================================
 template <typename S>
 Ellipsoid<S>::Ellipsoid(const Vector3<S>& radii)
-  : ShapeBase<S>(), radii(radii)
+  : ShapeBase<S>(), radii(radii), radii2(radii.cwiseProduct(radii))
 {
   // Do nothing
 }
@@ -87,9 +87,9 @@ Matrix3<S> Ellipsoid<S>::computeMomentofInertia() const
 {
   const S V = computeVolume();
 
-  const S a2 = radii[0] * radii[0] * V;
-  const S b2 = radii[1] * radii[1] * V;
-  const S c2 = radii[2] * radii[2] * V;
+  const S a2 = radii2[0] * V;
+  const S b2 = radii2[1] * V;
+  const S c2 = radii2[2] * V;
 
   return Vector3<S>(0.2 * (b2 + c2), 0.2 * (a2 + c2), 0.2 * (a2 + b2)).asDiagonal();
 }
@@ -143,6 +143,12 @@ std::vector<Vector3<S>> Ellipsoid<S>::getBoundVertices(
   return result;
 }
 
+template <typename S>
+Vector3<S> Ellipsoid<S>::localGetSupportingVertex(const Vector3<S>& vec) const
+{
+  Vector3<S> v = radii2.cwiseProduct(vec);
+  return v / std::sqrt(v.dot(vec));
+}
 } // namespace fcl
 
 #endif

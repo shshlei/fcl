@@ -133,7 +133,7 @@ template <typename Shape, typename BV, typename NarrowPhaseSolver>
 bool ShapeMeshConservativeAdvancementTraversalNode<Shape, BV, NarrowPhaseSolver>::
 canStop(S c) const
 {
-  if((c >= w * (this->min_distance - this->abs_err)) && (c * (1 + this->rel_err) >= w * this->min_distance))
+  if((c >= w * (this->min_distance - this->abs_err)) && (c * (1.0 + this->rel_err) >= w * this->min_distance))
   {
     const auto& data = stack.back();
 

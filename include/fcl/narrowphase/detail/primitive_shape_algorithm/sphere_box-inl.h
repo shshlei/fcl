@@ -85,7 +85,7 @@ bool nearestPointInBox(const Vector3<S>& size, const Vector3<S>& p_BQ,
       clamped = true;
       p_BN(i) = -half_size(i);
     }
-    if (p_BQ(i) > half_size(i)) {
+    else if (p_BQ(i) > half_size(i)) {
       clamped = true;
       p_BN(i) = half_size(i);
     }
